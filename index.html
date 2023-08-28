@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="images/logo.png" />
+    <title>Student Enrollment System</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="form-container">
+        <h2>Student Enrollment Form</h2>
+        <form>
+          <div class="form-field">
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" required />
+          </div>
+          <div class="form-field">
+            <label for="email">Email:</label>
+
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="form-field">
+            <label>Gender:</label> <br />
+            <br />
+            <input type="radio" id="male" name="gender" value="male" required />
+            <label for="male">Male</label>
+            <input
+              type="radio"
+              id="female"
+              name="gender"
+              value="female"
+              required />
+            <label for="female">Female</label>
+          </div>
+          <div class="form-field">
+            <label for="website">Website:</label>
+
+            <input type="url" id="website" name="website" />
+          </div>
+          <div class="form-field">
+            <label>Skills:</label>
+
+            <input
+              type="checkbox"
+              id="programming"
+              name="skills"
+              value="programming" />
+            <label for="programming">Programming</label>
+            <input type="checkbox" id="design" name="skills" value="design" />
+            <label for="design">Design</label>
+            <input
+              type="checkbox"
+              id="management"
+              name="skills"
+              value="Management" />
+            <label for="management">Management</label>
+          </div>
+          <button type="submit">Enroll</button>
+        </form>
+      </div>
+      <h2 id="enrolled-heading">Enrolled Students</h2>
+      <div class="students-container" id="studentsContainer"></div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+        const studentsContainer = document.getElementById("studentsContainer");
+
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const fullName = form.fullName.value;
+          const email = form.email.value;
+          const gender = form.gender.value;
+          const website = form.website.value;
+          const skills = Array.from(form.skills)
+            .filter((skillCheckbox) => skillCheckbox.checked)
+            .map((skillCheckbox) => skillCheckbox.value)
+            .join(", ");
+
+          const studentCard = document.createElement("div");
+          studentCard.classList.add("student-card");
+          studentCard.innerHTML = `
+            <h3>${fullName}</h3>
+            <p>Email: ${email}</p>
+            <p>Gender: ${gender}</p>
+            <p>Website: <a href="${website}" target="_blank">${website}</a></p>
+            <p>Skills: ${skills}</p>
+          `;
+          studentsContainer.appendChild(studentCard);
+          form.reset();
+        });
+      });
+    </script>
+  </body>
+</html>
